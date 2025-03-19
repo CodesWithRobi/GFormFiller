@@ -1,149 +1,16 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Examination Slot Link</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
 
-  <body>
-    <div class="form-container">
-      <h1>Examination Slot Booking</h1>
-      <h2>Get Prefilled Link</h2>
-      <form id="examBookingForm">
-        <label for="siteLink">G-Form Link:</label>
-        <input
-          type="url"
-          id="siteLink"
-          name="siteLink"
-          placeholder="https://docs.google.com/forms/d/e/..."
-        />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GFormFiller</title>
+</head>
 
-        <label for="regNumber">Student Reg Number :</label>
-        <input
-          type="text"
-          id="regNumber"
-          name="regNumber"
-          placeholder="212221220017"
-        />
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 
-        <label for="studentName">Name of The Student :</label>
-        <input
-          type="text"
-          id="studentName"
-          name="studentName"
-          placeholder="Tenali Ravi Kumar"
-        />
-
-        <label for="macAddress">MAC Address :</label>
-        <input
-          type="text"
-          id="macAddress"
-          name="macAddress"
-          placeholder="00:11:22:AA:BB:CC"
-        />
-
-        <label for="courseCode">Course Code :</label>
-        <input
-          type="text"
-          id="courseCode"
-          name="courseCode"
-          placeholder="19AA123"
-        />
-
-        <label for="courseName">Course Name :</label>
-        <input
-          type="text"
-          id="courseName"
-          name="courseName"
-          placeholder="My Course Name"
-        />
-
-        <label for="mobileNumber">Mobile Number :</label>
-        <input
-          type="tel"
-          id="mobileNumber"
-          name="mobileNumber"
-          placeholder="9123456780"
-        />
-
-        <label for="department">Department :</label>
-
-        <select id="department" name="department">
-          <option selected disabled>MY-DEPARTMENT</option>
-          <option value="01-AGRI">01-AGRI</option>
-          <option value="02-BME">02-BME</option>
-          <option value="03-CIVIL">03-CIVIL</option>
-          <option value="04-CSE">04-CSE</option>
-          <option value="05-EEE">05-EEE</option>
-          <option value="06-ECE">06-ECE</option>
-          <option value="07-EIE">07-EIE</option>
-          <option value="08-MECH">08-MECH</option>
-          <option value="09-MED">09-MED</option>
-          <option value="10-CSE(Cyber)">10-CSE(Cyber)</option>
-          <option value="11-CSE(IoT)">11-CSE(IoT)</option>
-          <option value="21-CHEM">21-CHEM</option>
-          <option value="22-IT">22-IT</option>
-          <option value="23-AIDS">23-AIDS</option>
-          <option value="24-AIML">24-AIML</option>
-          <option value="NMV">NMV</option>
-          <option value="STAFF">STAFF</option>
-        </select>
-
-        <label for="year">Year :</label>
-        <select id="year" name="year">
-          <option selected disabled>MY-YEAR</option>
-          <option value="First Year">First Year</option>
-          <option value="Second Year">Second Year</option>
-          <option value="Third Year">Third Year</option>
-          <option value="Final Year">Final Year</option>
-          <option value="Staff Practice">Staff Practice</option>
-        </select>
-
-        <label for="semester">Semester :</label>
-        <select id="semester" name="semester">
-          <option selected disabled>MY-SEMESTER</option>
-          <option value="SEM-I">SEM-I</option>
-          <option value="SEM-II">SEM-II</option>
-          <option value="SEM-III">SEM-III</option>
-          <option value="SEM-IV">SEM-IV</option>
-          <option value="SEM-V">SEM-V</option>
-          <option value="SEM-VI">SEM-VI</option>
-          <option value="SEM-VII">SEM-VII</option>
-          <option value="SEM-VIII">SEM-VIII</option>
-          <option value="Staff Practice">Staff Practice</option>
-        </select>
-
-        <label for="examDate">Exam Slot Booking Date :</label>
-        <input type="date" id="examDate" name="examDate" />
-
-        <button type="button" onclick="submitForm()">Generate Link</button>
-      </form>
-      <div id="result"></div>
-    </div>
-    <div style="display: flex; justify-content: center">
-      <a
-        href="https://github.com/CodesWithRobi/SEC-moodle-form-filler"
-        target="_blank"
-        id="openInGitHubButton"
-      >
-        <!-- GitHub Icon -->
-        <svg
-          id="githubIcon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="#FFFFFF"
-            d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.11 3.29 9.44 7.86 10.97.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.2-3.1-.12-.3-.52-1.52.11-3.17 0 0 .97-.31 3.18 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.5 3.17-1.19 3.17-1.19.64 1.65.24 2.87.12 3.17.75.81 1.2 1.84 1.2 3.1 0 4.43-2.69 5.4-5.25 5.69.41.35.78 1.04.78 2.1 0 1.52-.01 2.74-.01 3.11 0 .31.21.68.8.56 4.56-1.53 7.84-5.86 7.84-10.97C23.5 5.74 18.27.5 12 .5z"
-          />
-        </svg>
-        <span>Contribute in GitHub</span>
-      </a>
-    </div>
-    <script src="script/myscripts.js"></script>
-  </body>
 </html>
