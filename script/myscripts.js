@@ -1,10 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 
+  const details=JSON.parse(localStorage.getItem("details"))
+  if(details){
+    document.querySelector('input[name="entry.5640062"]').value=details.name;
+    document.getElementById("gformLink").value =details.gformLink;
+  }
+
   // Set today's date in the "Date of the session Attended" field
   const today = new Date();
   const formattedDatee = today.toISOString().split("T")[0].split("-").reverse().join("-");
-  console.log(formattedDatee)
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
   const day = String(today.getDate()).padStart(2, "0");
@@ -77,6 +82,7 @@ function submitForm() {
 
   const queryString = `?entry.1637387707=${college}&entry.5640062=${studentName}&entry.2020901070=${attended}&entry.1826535476=${sessionId}&entry.2113817863=${sessionDate}&entry.479418130=${startTime}&entry.1538401431=${subject}&entry.1360779365=${contentRating}&entry.1583983690=${engagementRating}&entry.1921200463=${materialsRating}&entry.111970851=${practicalRating}&entry.1802854015=${lengthRating}&entry.288981890=${platformRating}&entry.285324898=${explanationRating}&entry.1126771271=${alignmentRating}&entry.2135882849=${satisfactionRating}&entry.1308303995=${feedback}`;
   // Display the result as a clickable link with a copy button
+  localStorage.setItem("details", JSON.stringify({ name: document.querySelector('input[name="entry.5640062"]').value, gformLink: siteLink }))
   console.log(queryString)
   const resultDiv = document.getElementById("result") || document.createElement("div");
   resultDiv.id = "result";
