@@ -1,11 +1,5 @@
 [
     {
-        "date":"17-03-2025",
-        "startTime":"19:00",
-        "subject":"DSA",
-        "sessionId":"B20"
-    },
-    {
         "date":"19-03-2025",
         "startTime":"19:00",
         "subject":"DSA",
@@ -32,7 +26,7 @@
     {
         "date":"25-03-2025",
         "startTime":"19:00",
-        "subject":"OS",
+        "subject":"DSA",
         "sessionId":"B24"
     }
 ]

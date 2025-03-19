@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 
-  const details=JSON.parse(localStorage.getItem("details"))
-  if(details){
-    document.querySelector('input[name="entry.5640062"]').value=details.name;
-    document.getElementById("gformLink").value =details.gformLink;
+  const details = JSON.parse(localStorage.getItem("details"))
+  if (details) {
+    document.querySelector('input[name="entry.5640062"]').value = details.name;
+    document.getElementById("gformLink").value = details.gformLink;
   }
 
   // Set today's date in the "Date of the session Attended" field
@@ -22,8 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (dateInput) {
     dateInput.value = formattedDate;
   }
-
-  // let sessions;
   fetch("./sessions.json")
     .then((res) => res.json())
     .then((data) => {
@@ -33,10 +31,9 @@ document.addEventListener("DOMContentLoaded", function () {
         sessionId.value = todaySession.sessionId;
         let hour = todaySession.startTime.split(":")[0];
         let minute = todaySession.startTime.split(":")[1];
-        
-        console.log(hour >= 12 ? `${hour - 12}:${minute} PM` : `${hour}:${minute} AM`)
-        if(minute=="00") minute=""
-        else minute=":"+minute
+
+        if (minute == "00") minute = ""
+        else minute = ":" + minute
         sessionTime.value = hour >= 12 ? `${hour - 12}${minute} PM` : `${hour}${minute} AM`;
         const subjectRadio = document.querySelector(`input[name="entry.1538401431"][value="${todaySession.subject}"]`);
         if (subjectRadio) {
@@ -44,9 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       } else {
         console.warn("No session found for today.");
+        alert("Slots aren't updated yet")
       }
     })
-    .catch((err) => console.error("Error:", err));
+    .catch((err) => { 
+      alert("Error! Please do it manually")
+      console.error("Error:", err) });
 
 
 });
@@ -77,13 +77,12 @@ function submitForm() {
   // Base URL for the Google Form pre-filled link
 
 
-  const siteLink=document.getElementById("gformLink").value;
+  const siteLink = document.getElementById("gformLink").value;
   // Construct the query string using the form's entry IDs
 
   const queryString = `?entry.1637387707=${college}&entry.5640062=${studentName}&entry.2020901070=${attended}&entry.1826535476=${sessionId}&entry.2113817863=${sessionDate}&entry.479418130=${startTime}&entry.1538401431=${subject}&entry.1360779365=${contentRating}&entry.1583983690=${engagementRating}&entry.1921200463=${materialsRating}&entry.111970851=${practicalRating}&entry.1802854015=${lengthRating}&entry.288981890=${platformRating}&entry.285324898=${explanationRating}&entry.1126771271=${alignmentRating}&entry.2135882849=${satisfactionRating}&entry.1308303995=${feedback}`;
   // Display the result as a clickable link with a copy button
   localStorage.setItem("details", JSON.stringify({ name: document.querySelector('input[name="entry.5640062"]').value, gformLink: siteLink }))
-  console.log(queryString)
   const resultDiv = document.getElementById("result") || document.createElement("div");
   resultDiv.id = "result";
   resultDiv.innerHTML = `<button id="copyButton">Copy Link</button><a href="${siteLink}${queryString}" target="_blank">Open Pre-filled Form Link</a>`;
@@ -94,5 +93,6 @@ function submitForm() {
   document.getElementById("copyButton").addEventListener("click", function () {
     navigator.clipboard.writeText(`${siteLink}${queryString}`);
     this.style.backgroundColor = "grey";
+    alert("Copied!")
   });
 }
