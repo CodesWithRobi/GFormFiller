@@ -1,53 +1,92 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed, so we add 1
-  const day = String(today.getDate()).padStart(2, "0");
+document.addEventListener("DOMContentLoaded", function () {
 
+
+  // Set today's date in the "Date of the session Attended" field
+  const today = new Date();
+  const formattedDatee = today.toISOString().split("T")[0].split("-").reverse().join("-");
+  console.log(formattedDatee)
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  const day = String(today.getDate()).padStart(2, "0");
   const formattedDate = `${year}-${month}-${day}`;
 
-  document.getElementById("examDate").value = formattedDate;
+  // Find the date input field by its name attribute (entry.2113817863)
+  const dateInput = document.querySelector('input[name="entry.2113817863"]');
+  const sessionId = document.querySelector('input[name="entry.1826535476"]');
+  const sessionTime = document.querySelector('input[name="entry.479418130"]');
+  if (dateInput) {
+    dateInput.value = formattedDate;
+  }
+
+  // let sessions;
+  fetch("./sessions.json")
+    .then((res) => res.json())
+    .then((data) => {
+      const todaySession = data.find((session) => session.date === formattedDatee);
+
+      if (todaySession) {
+        sessionId.value = todaySession.sessionId;
+        let hour = todaySession.startTime.split(":")[0];
+        let minute = todaySession.startTime.split(":")[1];
+        
+        console.log(hour >= 12 ? `${hour - 12}:${minute} PM` : `${hour}:${minute} AM`)
+        if(minute=="00") minute=""
+        else minute=":"+minute
+        sessionTime.value = hour >= 12 ? `${hour - 12}${minute} PM` : `${hour}${minute} AM`;
+        const subjectRadio = document.querySelector(`input[name="entry.1538401431"][value="${todaySession.subject}"]`);
+        if (subjectRadio) {
+          subjectRadio.checked = true;
+        }
+      } else {
+        console.warn("No session found for today.");
+      }
+    })
+    .catch((err) => console.error("Error:", err));
+
+
 });
+
 function submitForm() {
-  const siteLink = document.getElementById("siteLink").value;
-  const regNumber = encodeURIComponent(
-    document.getElementById("regNumber").value,
-  );
-  const studentName = encodeURIComponent(
-    document.getElementById("studentName").value,
-  );
-  const macAddress = encodeURIComponent(
-    document.getElementById("macAddress").value,
-  );
-  const courseCode = encodeURIComponent(
-    document.getElementById("courseCode").value,
-  );
-  const courseName = encodeURIComponent(
-    document.getElementById("courseName").value,
-  );
-  const mobileNumber = encodeURIComponent(
-    document.getElementById("mobileNumber").value,
-  );
-  const department = encodeURIComponent(
-    document.getElementById("department").value,
-  );
-  const year = encodeURIComponent(document.getElementById("year").value);
-  const semester = encodeURIComponent(
-    document.getElementById("semester").value,
-  );
-  let examDate = encodeURIComponent(document.getElementById("examDate").value);
-  let parts = examDate.split("-");
-  examDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
-  // Format the query string
-  const queryString = `?entry.151300878=${courseCode}&entry.269045572=${regNumber}&entry.470796958=${examDate}&entry.545502880=${year}&entry.619978745=${mobileNumber}&entry.767058731=${macAddress}&entry.1474847017=${studentName}&entry.1661013302=${courseName}&entry.2025981088=${department}&entry.2102436453=${semester}`;
 
-  // Display the result as a clickable link
-  document.getElementById("result").innerHTML =
-    `<a href="${siteLink}${queryString}" target="_blank">Open Link</a><button id="copyButton">Copy Link</button>`;
+  // Extract values from the form fields using their entry IDs
+  const college = encodeURIComponent("Saveetha Engineering College"); // Dropdown, default to the only option
 
-  document.getElementById("copyButton").addEventListener("click", function() {
+  const studentName = encodeURIComponent(document.querySelector('input[name="entry.5640062"]').value || "");
+  const attended = document.querySelector('select[name="entry.2020901070"]')?.value || "";
+  const sessionId = encodeURIComponent(document.querySelector('input[name="entry.1826535476"]').value || "");
+  const sessionDate = encodeURIComponent(document.querySelector('input[name="entry.2113817863"]').value || "");
+  const startTime = encodeURIComponent(document.querySelector('input[name="entry.479418130"]').value || "");
+  const subject = document.querySelector('input[name="entry.1538401431"]:checked')?.value || "";
+  const contentRating = document.querySelector('input[name="entry.1360779365"]:checked')?.value || "";
+  const engagementRating = document.querySelector('input[name="entry.1583983690"]:checked')?.value || "";
+  const materialsRating = document.querySelector('input[name="entry.1921200463"]:checked')?.value || "";
+  const practicalRating = document.querySelector('input[name="entry.111970851"]:checked')?.value || "";
+  const lengthRating = document.querySelector('input[name="entry.1802854015"]:checked')?.value || "";
+  const platformRating = document.querySelector('input[name="entry.288981890"]:checked')?.value || "";
+  const explanationRating = document.querySelector('input[name="entry.285324898"]:checked')?.value || "";
+  const alignmentRating = document.querySelector('input[name="entry.1126771271"]:checked')?.value || "";
+  const satisfactionRating = document.querySelector('input[name="entry.2135882849"]:checked')?.value || "";
+  const feedback = encodeURIComponent(document.querySelector('textarea[name="entry.1308303995"]').value || "");
+
+  // Base URL for the Google Form pre-filled link
+
+
+  const siteLink=document.getElementById("gformLink").value;
+  // Construct the query string using the form's entry IDs
+
+  const queryString = `?entry.1637387707=${college}&entry.5640062=${studentName}&entry.2020901070=${attended}&entry.1826535476=${sessionId}&entry.2113817863=${sessionDate}&entry.479418130=${startTime}&entry.1538401431=${subject}&entry.1360779365=${contentRating}&entry.1583983690=${engagementRating}&entry.1921200463=${materialsRating}&entry.111970851=${practicalRating}&entry.1802854015=${lengthRating}&entry.288981890=${platformRating}&entry.285324898=${explanationRating}&entry.1126771271=${alignmentRating}&entry.2135882849=${satisfactionRating}&entry.1308303995=${feedback}`;
+  // Display the result as a clickable link with a copy button
+  console.log(queryString)
+  const resultDiv = document.getElementById("result") || document.createElement("div");
+  resultDiv.id = "result";
+  resultDiv.innerHTML = `<button id="copyButton">Copy Link</button><a href="${siteLink}${queryString}" target="_blank">Open Pre-filled Form Link</a>`;
+  document.body.appendChild(resultDiv);
+  window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
+
+  // Add copy functionality
+  document.getElementById("copyButton").addEventListener("click", function () {
     navigator.clipboard.writeText(`${siteLink}${queryString}`);
-    document.getElementById("copyButton").style = "background-color: grey;";
+    this.style.backgroundColor = "grey";
   });
 }

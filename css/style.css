@@ -4,62 +4,112 @@ body {
   color: #e0e0e0;
   margin: 0;
   padding: 20px;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .form-container {
-  max-width: 600px;
+  max-width: 700px;
   margin: auto;
   background-color: #1f1f1f;
-  padding: 25px;
+  padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   animation: fadeIn 1s ease-in-out;
 }
 
 /* Header Styles */
-h1,
-h2 {
+h1 {
   text-align: center;
   color: #ffffff;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+h2 {
+  text-align: center;
+  color: #81c784;
+  margin-bottom: 25px;
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+/* Form Group Styles */
+.form-group {
   margin-bottom: 20px;
-  font-weight: 400;
 }
 
 /* Label Styles */
 label {
   display: block;
-  margin-top: 15px;
+  margin-bottom: 8px;
   color: #bdbdbd;
   font-size: 1rem;
   font-weight: 300;
 }
 
-/* Input, Select, and Fieldset Styles */
-input,
-select {
+/* Input, Select, and Textarea Styles */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
   width: 100%;
   padding: 10px;
-  margin-top: 8px;
   background-color: #333;
   color: #ffffff;
   border: 2px solid #555;
   border-radius: 8px;
   box-sizing: border-box;
-  transition:
-    border-color 0.3s ease,
-    background-color 0.3s ease;
-  display: block;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
   border-color: #4caf50;
   background-color: #292929;
   box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+/* Radio Button Styles */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #333;
+  border: 2px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.radio-group input[type="radio"]:checked+label {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  color: #ffffff;
+}
+
+.radio-group label:hover {
+  border-color: #4caf50;
 }
 
 /* Submit Button Styles */
@@ -70,13 +120,10 @@ button {
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  margin-top: 25px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 500;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   position: relative;
   overflow: hidden;
 }
@@ -87,7 +134,6 @@ button:before {
   top: 50%;
   left: 50%;
   width: 300%;
-  flex-basis: 48fr;
   height: 300%;
   background-color: rgba(255, 255, 255, 0.15);
   transition: all 0.4s ease-out;
@@ -109,19 +155,6 @@ button:active {
   transform: scale(0.98);
 }
 
-/* Anchor Link Styles */
-a {
-  color: #81c784;
-  text-decoration: none;
-  font-weight: 400;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #66bb6a;
-  text-decoration: underline;
-}
-
 /* Result Container Styles */
 #result {
   margin-top: 25px;
@@ -133,33 +166,26 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-
-  & button {
-    flex-basis: 45%;
-    padding: 1rem 0;
-    margin: 0;
-  }
-
-  & a {
-    font-size: 1.1em;
-    text-decoration: none;
-    border-radius: 8px;
-    box-shadow: inset 0 0 0 0 #4caf50;
-    color: #4caf50;
-    padding: 1rem 3rem;
-    margin: 0 -0.15rem;
-    transition:
-      color 0.5s ease-in-out,
-      box-shadow 0.5s ease-in-out;
-    vertical-align: center;
-
-    &:hover {
-      color: #fff;
-      box-shadow: inset 11em 0 0 0 #4caf50;
-    }
-  }
 }
 
+#result button {
+  flex-basis: 45%;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+#result a {
+  font-size: 1.1em;
+  text-decoration: none;
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 0 #4caf50;
+  color: #4caf50;
+  padding: 1rem 3rem;
+  margin: 0 -0.15rem;
+  transition: color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+/* GitHub Button Styles */
 #openInGitHubButton {
   display: flex;
   justify-content: center;
@@ -170,12 +196,10 @@ a:hover {
   text-decoration: none;
   border-radius: 8px;
   font-weight: 500;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
-  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  width: 600px;
+  width: 700px;
 }
 
 #openInGitHubButton:hover {
@@ -221,44 +245,368 @@ a:hover {
   }
 }
 
-/* Footer Styles */
-.footer {
-  margin-top: 40px;
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+  .form-container {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .radio-group {
+    gap: 10px;
+  }
+
+  #result {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  #openInGitHubButton {
+    width: 100%;
+  }
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.form-container {
+  max-width: 700px;
+  margin: auto;
+  background-color: #1f1f1f;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Header Styles */
+h1 {
   text-align: center;
-  font-size: 0.9rem;
-  color: #bdbdbd;
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 2rem;
 }
 
-.footer a {
+h2 {
+  text-align: center;
   color: #81c784;
-  font-weight: 400;
-  transition: color 0.3s ease;
+  margin-bottom: 25px;
+  font-weight: 300;
+  font-size: 1.5rem;
 }
 
-.footer a:hover {
-  color: #66bb6a;
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Label Styles */
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #bdbdbd;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+/* Input, Select, and Textarea Styles */
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  color: #ffffff;
+  border: 2px solid #555;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4caf50;
+  background-color: #292929;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+/* Radio Button Styles */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.radio-group input[type="radio"] {
+  display: none;
+}
+
+.radio-group label {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: #333;
+  border: 2px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+.radio-group input[type="radio"]:checked+label {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  color: #ffffff;
+}
+
+.radio-group label:hover {
+  border-color: #4caf50;
+}
+
+/* Submit Button Styles */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: all 0.4s ease-out;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  border-radius: 50%;
+}
+
+button:hover:before {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+
+button:hover {
+  background-color: #388e3c;
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #2e7d32;
+  transform: scale(0.98);
+}
+
+/* Result Container Styles */
+#result {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #444;
+  border-radius: 8px;
+  word-wrap: break-word;
+  animation: fadeInUp 0.5s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  &>* {
+    border: 1px solid;
+    flex-basis: 40% !important;
+  }
+}
+
+#result button {
+  /* flex-basis: 40%; */
+  background-color: transparent;
+  padding: 1rem 0;
+  box-shadow: inset 0 0 0 0 #4caf50;
+  color: #4caf50;
+  padding: 1rem 3rem;
+  margin: 0 -0.15rem;
+  transition: color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+#result a {
+  font-size: 1.2em;
+  text-decoration: none;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #4caf50;
+  color: white;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+}
+#result a:hover{
+  letter-spacing: 3px;
+}
+
+#result button:hover {
+  color: #fff;
+  box-shadow: inset 45em 0 0 0 #4caf50;
+}
+
+
+/* GitHub Button Styles */
+#openInGitHubButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 25px;
+  background-color: #24292e;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  width: 700px;
+}
+
+#openInGitHubButton:hover {
+  background-color: #2c333a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.35);
+}
+
+#openInGitHubButton:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+#githubIcon {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 600px) {
   .form-container {
     padding: 20px;
+    max-width: 100%;
   }
 
   input,
   select,
+  textarea,
   button {
-    width: 100%;
     font-size: 0.9rem;
     padding: 10px;
   }
 
-  h1,
-  h2 {
+  h1 {
     font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .radio-group {
+    gap: 10px;
   }
 
   #result {
     flex-direction: column;
+    gap: 10px;
   }
+
+  #openInGitHubButton {
+    width: 100%;
+  }
+}
+
+input[type="date"],
+input[type="time"] {
+  position: relative;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  filter: invert(100%);
+  padding-left: 90%;
+  width: 10%;
+  cursor: pointer;
+  height: 70%;
+  transform: translateY(-50%);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected {
+  filter: invert(0.85) grayscale(1);
 }

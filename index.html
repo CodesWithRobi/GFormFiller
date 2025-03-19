@@ -1,149 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Examination Slot Link</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
 
-  <body>
-    <div class="form-container">
-      <h1>Examination Slot Booking</h1>
-      <h2>Get Prefilled Link</h2>
-      <form id="examBookingForm">
-        <label for="siteLink">G-Form Link:</label>
-        <input
-          type="url"
-          id="siteLink"
-          name="siteLink"
-          placeholder="https://docs.google.com/forms/d/e/..."
-        />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Feedback & Attendance Form</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
-        <label for="regNumber">Student Reg Number :</label>
-        <input
-          type="text"
-          id="regNumber"
-          name="regNumber"
-          placeholder="212221220017"
-        />
-
-        <label for="studentName">Name of The Student :</label>
-        <input
-          type="text"
-          id="studentName"
-          name="studentName"
-          placeholder="Tenali Ravi Kumar"
-        />
-
-        <label for="macAddress">MAC Address :</label>
-        <input
-          type="text"
-          id="macAddress"
-          name="macAddress"
-          placeholder="00:11:22:AA:BB:CC"
-        />
-
-        <label for="courseCode">Course Code :</label>
-        <input
-          type="text"
-          id="courseCode"
-          name="courseCode"
-          placeholder="19AA123"
-        />
-
-        <label for="courseName">Course Name :</label>
-        <input
-          type="text"
-          id="courseName"
-          name="courseName"
-          placeholder="My Course Name"
-        />
-
-        <label for="mobileNumber">Mobile Number :</label>
-        <input
-          type="tel"
-          id="mobileNumber"
-          name="mobileNumber"
-          placeholder="9123456780"
-        />
-
-        <label for="department">Department :</label>
-
-        <select id="department" name="department">
-          <option selected disabled>MY-DEPARTMENT</option>
-          <option value="01-AGRI">01-AGRI</option>
-          <option value="02-BME">02-BME</option>
-          <option value="03-CIVIL">03-CIVIL</option>
-          <option value="04-CSE">04-CSE</option>
-          <option value="05-EEE">05-EEE</option>
-          <option value="06-ECE">06-ECE</option>
-          <option value="07-EIE">07-EIE</option>
-          <option value="08-MECH">08-MECH</option>
-          <option value="09-MED">09-MED</option>
-          <option value="10-CSE(Cyber)">10-CSE(Cyber)</option>
-          <option value="11-CSE(IoT)">11-CSE(IoT)</option>
-          <option value="21-CHEM">21-CHEM</option>
-          <option value="22-IT">22-IT</option>
-          <option value="23-AIDS">23-AIDS</option>
-          <option value="24-AIML">24-AIML</option>
-          <option value="NMV">NMV</option>
-          <option value="STAFF">STAFF</option>
+<body>
+  <div class="form-container">
+    <h1>Student Feedback & Attendance Form</h1>
+    <h2>Get Prefilled Link</h2>
+    <form id="feedbackForm">
+      <div class="form-group">
+        <label for="gformLink">Google Form Link</label>
+        <input type="text" id="gformLink" placeholder="Enter the google form link given to you" />
+      </div>
+      <div class="form-group">
+        <label for="college">College:</label>
+        <select id="college" name="entry.1637387707">
+          <option selected value="Saveetha Engineering College">Saveetha Engineering College</option>
+          <!-- Add more options if needed -->
         </select>
+      </div>
 
-        <label for="year">Year :</label>
-        <select id="year" name="year">
-          <option selected disabled>MY-YEAR</option>
-          <option value="First Year">First Year</option>
-          <option value="Second Year">Second Year</option>
-          <option value="Third Year">Third Year</option>
-          <option value="Final Year">Final Year</option>
-          <option value="Staff Practice">Staff Practice</option>
+      <div class="form-group">
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" name="entry.5640062" placeholder="Enter your name" />
+      </div>
+
+      <div class="form-group">
+        <label for="attended">Did you attend the session?</label>
+        <select id="attended" name="entry.2020901070">
+          <option value="Yes" selected>Yes</option>
+          <option value="No">No</option>
         </select>
+      </div>
 
-        <label for="semester">Semester :</label>
-        <select id="semester" name="semester">
-          <option selected disabled>MY-SEMESTER</option>
-          <option value="SEM-I">SEM-I</option>
-          <option value="SEM-II">SEM-II</option>
-          <option value="SEM-III">SEM-III</option>
-          <option value="SEM-IV">SEM-IV</option>
-          <option value="SEM-V">SEM-V</option>
-          <option value="SEM-VI">SEM-VI</option>
-          <option value="SEM-VII">SEM-VII</option>
-          <option value="SEM-VIII">SEM-VIII</option>
-          <option value="Staff Practice">Staff Practice</option>
-        </select>
+      <div class="form-group">
+        <label for="sessionId">Session ID:</label>
+        <input type="text" id="sessionId" name="entry.1826535476" placeholder="e.g., B16" />
+      </div>
 
-        <label for="examDate">Exam Slot Booking Date :</label>
-        <input type="date" id="examDate" name="examDate" />
+      <div class="form-group">
+        <label for="sessionDate">Date of the Session Attended:</label>
+        <input type="date" id="sessionDate" name="entry.2113817863" />
+      </div>
 
-        <button type="button" onclick="submitForm()">Generate Link</button>
-      </form>
-      <div id="result"></div>
-    </div>
-    <div style="display: flex; justify-content: center">
-      <a
-        href="https://github.com/CodesWithRobi/SEC-moodle-form-filler"
-        target="_blank"
-        id="openInGitHubButton"
-      >
-        <!-- GitHub Icon -->
-        <svg
-          id="githubIcon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
-          <path
-            fill="#FFFFFF"
-            d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.11 3.29 9.44 7.86 10.97.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.2-3.1-.12-.3-.52-1.52.11-3.17 0 0 .97-.31 3.18 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.5 3.17-1.19 3.17-1.19.64 1.65.24 2.87.12 3.17.75.81 1.2 1.84 1.2 3.1 0 4.43-2.69 5.4-5.25 5.69.41.35.78 1.04.78 2.1 0 1.52-.01 2.74-.01 3.11 0 .31.21.68.8.56 4.56-1.53 7.84-5.86 7.84-10.97C23.5 5.74 18.27.5 12 .5z"
-          />
-        </svg>
-        <span>Contribute in GitHub</span>
-      </a>
-    </div>
-    <script src="script/myscripts.js"></script>
-  </body>
+      <div class="form-group">
+        <label for="startTime">Start Time:</label>
+        <input type="text" id="startTime" name="entry.479418130" />
+      </div>
+
+      <div class="form-group">
+        <label>Subject:</label>
+        <div class="radio-group">
+          <input type="radio" id="subjectDSA" name="entry.1538401431" value="DSA" />
+          <label for="subjectDSA">DSA</label>
+          <input type="radio" id="subjectDBMS" name="entry.1538401431" value="DBMS" />
+          <label for="subjectDBMS">DBMS</label>
+          <input type="radio" id="subjectOS" name="entry.1538401431" value="OS" />
+          <label for="subjectOS">OS</label>
+          <input type="radio" id="subjectOOPS" name="entry.1538401431" value="OOPS" />
+          <label for="subjectOOPS">OOPS</label>
+          <input type="radio" id="subjectSystemDesign" name="entry.1538401431" value="SYSTEM DESIGN" />
+          <label for="subjectSystemDesign">SYSTEM DESIGN</label>
+          <input type="radio" id="subjectCN" name="entry.1538401431" value="CN" />
+          <label for="subjectCN">CN</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Content Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="content1" name="entry.1360779365" value="1" />
+          <label for="content1">1</label>
+          <input type="radio" id="content2" name="entry.1360779365" value="2" />
+          <label for="content2">2</label>
+          <input type="radio" id="content3" name="entry.1360779365" value="3" />
+          <label for="content3">3</label>
+          <input type="radio" id="content4" name="entry.1360779365" value="4" />
+          <label for="content4">4</label>
+          <input type="radio" id="content5" checked name="entry.1360779365" value="5" />
+          <label for="content5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Engagement Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="engage1" name="entry.1583983690" value="1" />
+          <label for="engage1">1</label>
+          <input type="radio" id="engage2" name="entry.1583983690" value="2" />
+          <label for="engage2">2</label>
+          <input type="radio" id="engage3" name="entry.1583983690" value="3" />
+          <label for="engage3">3</label>
+          <input type="radio" id="engage4" name="entry.1583983690" value="4" />
+          <label for="engage4">4</label>
+          <input type="radio" id="engage5" checked name="entry.1583983690" value="5" />
+          <label for="engage5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Materials Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="materials1" name="entry.1921200463" value="1" />
+          <label for="materials1">1</label>
+          <input type="radio" id="materials2" name="entry.1921200463" value="2" />
+          <label for="materials2">2</label>
+          <input type="radio" id="materials3" name="entry.1921200463" value="3" />
+          <label for="materials3">3</label>
+          <input type="radio" id="materials4" name="entry.1921200463" value="4" />
+          <label for="materials4">4</label>
+          <input type="radio" id="materials5" checked name="entry.1921200463" value="5" />
+          <label for="materials5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Practical Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="practical1" name="entry.111970851" value="1" />
+          <label for="practical1">1</label>
+          <input type="radio" id="practical2" name="entry.111970851" value="2" />
+          <label for="practical2">2</label>
+          <input type="radio" id="practical3" name="entry.111970851" value="3" />
+          <label for="practical3">3</label>
+          <input type="radio" id="practical4" name="entry.111970851" value="4" />
+          <label for="practical4">4</label>
+          <input type="radio" id="practical5" checked name="entry.111970851" value="5" />
+          <label for="practical5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Length Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="length1" name="entry.1802854015" value="1" />
+          <label for="length1">1</label>
+          <input type="radio" id="length2" name="entry.1802854015" value="2" />
+          <label for="length2">2</label>
+          <input type="radio" id="length3" name="entry.1802854015" value="3" />
+          <label for="length3">3</label>
+          <input type="radio" id="length4" name="entry.1802854015" value="4" />
+          <label for="length4">4</label>
+          <input type="radio" id="length5" checked name="entry.1802854015" value="5" />
+          <label for="length5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Platform Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="platform1" name="entry.288981890" value="1" />
+          <label for="platform1">1</label>
+          <input type="radio" id="platform2" name="entry.288981890" value="2" />
+          <label for="platform2">2</label>
+          <input type="radio" id="platform3" name="entry.288981890" value="3" />
+          <label for="platform3">3</label>
+          <input type="radio" id="platform4" name="entry.288981890" value="4" />
+          <label for="platform4">4</label>
+          <input type="radio" id="platform5" checked name="entry.288981890" value="5" />
+          <label for="platform5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Explanation Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="explanation1" name="entry.285324898" value="1" />
+          <label for="explanation1">1</label>
+          <input type="radio" id="explanation2" name="entry.285324898" value="2" />
+          <label for="explanation2">2</label>
+          <input type="radio" id="explanation3" name="entry.285324898" value="3" />
+          <label for="explanation3">3</label>
+          <input type="radio" id="explanation4" name="entry.285324898" value="4" />
+          <label for="explanation4">4</label>
+          <input type="radio" id="explanation5" checked name="entry.285324898" value="5" />
+          <label for="explanation5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Alignment Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="alignment1" name="entry.1126771271" value="1" />
+          <label for="alignment1">1</label>
+          <input type="radio" id="alignment2" name="entry.1126771271" value="2" />
+          <label for="alignment2">2</label>
+          <input type="radio" id="alignment3" name="entry.1126771271" value="3" />
+          <label for="alignment3">3</label>
+          <input type="radio" id="alignment4" name="entry.1126771271" value="4" />
+          <label for="alignment4">4</label>
+          <input type="radio" id="alignment5" checked name="entry.1126771271" value="5" />
+          <label for="alignment5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Satisfaction Rating (1-5):</label>
+        <div class="radio-group">
+          <input type="radio" id="satisfaction1" name="entry.2135882849" value="1" />
+          <label for="satisfaction1">1</label>
+          <input type="radio" id="satisfaction2" name="entry.2135882849" value="2" />
+          <label for="satisfaction2">2</label>
+          <input type="radio" id="satisfaction3" name="entry.2135882849" value="3" />
+          <label for="satisfaction3">3</label>
+          <input type="radio" id="satisfaction4" name="entry.2135882849" value="4" />
+          <label for="satisfaction4">4</label>
+          <input type="radio" id="satisfaction5" checked name="entry.2135882849" value="5" />
+          <label for="satisfaction5">5</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback">Additional Feedback:</label>
+        <textarea id="feedback" name="entry.1308303995">N/A</textarea>
+      </div>
+
+      <button type="button" onclick="submitForm()">Generate Link</button>
+    </form>
+    <!-- <div id="result"></div> -->
+  </div>
+  <div style="display: flex; justify-content: center">
+    <a href="https://github.com/CodesWithRobi/SEC-moodle-form-filler" target="_blank" id="openInGitHubButton">
+      <svg id="githubIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path fill="#FFFFFF"
+          d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.11 3.29 9.44 7.86 10.97.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.2-3.1-.12-.3-.52-1.52.11-3.17 0 0 .97-.31 3.18 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.2-1.5 3.17-1.19 3.17-1.19.64 1.65.24 2.87.12 3.17.75.81 1.2 1.84 1.2 3.1 0 4.43-2.69 5.4-5.25 5.69.41.35.78 1.04.78 2.1 0 1.52-.01 2.74-.01 3.11 0 .31.21.68.8.56 4.56-1.53 7.84-5.86 7.84-10.97C23.5 5.74 18.27.5 12 .5z" />
+      </svg>
+      <span>Contribute in GitHub</span>
+    </a>
+  </div>
+  <script src="script/myscripts.js"></script>
+</body>
+
 </html>
