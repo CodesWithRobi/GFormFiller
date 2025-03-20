@@ -55,10 +55,7 @@ const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLin
         if (typeCode === 7) {
           const gridType = entryData[11][0]; // 0 for radio, 1 for checkbox
           const fieldType = gridType === 0 ? "radio" : "checkbox";
-          // Since field[5] is null, use a fallback for column options
-          const columnOptions = field[5] && field[5].length > 0
-            ? field[5].map((col: any) => col[0][0])
-            : ["Column 1", "Column 2", "Column 3"]; // Fallback if unavailable
+          const columnOptions = entryData[1].map((col: any) => col[0])
           return field[4].map((row: any) => ({
             id: `entry.${row[0]}`,
             label: `${label} - ${row[3][0]}`,
