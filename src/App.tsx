@@ -11,6 +11,7 @@ function App() {
 
   const handleFieldsFetched = (fetchedFields: FormField[]) => {
     setFields(fetchedFields);
+    console.log(fields);
   };
 
   return (

@@ -16,8 +16,7 @@ interface FormFetcherProps {
   setLink: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched , link, setLink}) => {
-
+const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLink }) => {
   const fetchFormField = async (url: string) => {
     try {
       const response = await axios.get("http://localhost:3000/fetch-form", {
@@ -47,80 +46,90 @@ const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched , link, setLi
 
       const qr7OaeDivs = $(".Qr7Oae");
 
-      const extractedFields: FormField[] = fieldsData.map((field: any, index: number) => {
+      const extractedFields: FormField[] = fieldsData.flatMap((field: any, index: number) => {
         const label = field[1];
         const typeCode = field[3];
         const entryData = field[4][0];
-        const entryId = entryData[0];
         const isRequired = $(qr7OaeDivs[index]).find(".vnumgf").length > 0;
 
-        let fieldType: string;
-        let options: string[] | undefined;
+        if (typeCode === 7) {
+          const gridType = entryData[11][0]; // 0 for radio, 1 for checkbox
+          const fieldType = gridType === 0 ? "radio" : "checkbox";
+          // Since field[5] is null, use a fallback for column options
+          const columnOptions = field[5] && field[5].length > 0
+            ? field[5].map((col: any) => col[0][0])
+            : ["Column 1", "Column 2", "Column 3"]; // Fallback if unavailable
+          return field[4].map((row: any) => ({
+            id: `entry.${row[0]}`,
+            label: `${label} - ${row[3][0]}`,
+            type: fieldType,
+            options: columnOptions,
+            required: isRequired,
+          }));
+        } else {
+          const entryId = `entry.${entryData[0]}`;
+          let fieldType: string;
+          let options: string[] | undefined;
 
-        switch (typeCode) {
-          case 0:
-            fieldType = "text";
-            break;
-          case 1:
-            fieldType = "textarea";
-            break;
-          case 2:
-            fieldType = "radio";
-            if (entryData[1]) {
-              options = entryData[1].map((opt: any) => (opt[0] === "" ? "Other" : opt[0]));
-            }
-            break;
-          case 3:
-            fieldType = "select";
-            if (entryData[1]) {
-              options = entryData[1].map((opt: any) => opt[0]);
-            }
-            break;
-          case 4:
-            fieldType = "checkbox";
-            if (entryData[1]) {
-              options = entryData[1].map((opt: any) => (opt[0] === "" ? "Other" : opt[0]));
-            }
-            break;
-          case 5:
-            fieldType = "scale";
-            if (entryData[1]) {
-              options = entryData[1].map((opt: any) => opt[0]);
-            }
-            break;
-          case 7:
-            const gridType = entryData[11][0];
-            fieldType = gridType === 0 ? "radio-grid" : "checkbox-grid";
-            const rows = field[4].map((row: any) => row[3][0]);
-            options = rows;
-            break;
-          case 9:
-            fieldType = "date";
-            break;
-          case 10:
-            fieldType = "time";
-            break;
-          case 13:
-            fieldType = "file";
-            break;
-          case 18:
-            fieldType = "rating";
-            if (entryData[1]) {
-              options = entryData[1].map((opt: any) => opt[0]);
-            }
-            break;
-          default:
-            fieldType = "unknown";
-            console.warn(`Unknown type code: ${typeCode} for field: ${label}`);
+          switch (typeCode) {
+            case 0:
+              fieldType = "text";
+              break;
+            case 1:
+              fieldType = "textarea";
+              break;
+            case 2:
+              fieldType = "radio";
+              if (entryData[1]) {
+                options = entryData[1].map((opt: any) => (opt[0] === "" ? "Other" : opt[0]));
+              }
+              break;
+            case 3:
+              fieldType = "select";
+              if (entryData[1]) {
+                options = entryData[1].map((opt: any) => opt[0]);
+              }
+              break;
+            case 4:
+              fieldType = "checkbox";
+              if (entryData[1]) {
+                options = entryData[1].map((opt: any) => (opt[0] === "" ? "Other" : opt[0]));
+              }
+              break;
+            case 5:
+              fieldType = "scale";
+              if (entryData[1]) {
+                options = entryData[1].map((opt: any) => opt[0]);
+              }
+              break;
+            case 9:
+              fieldType = "date";
+              break;
+            case 10:
+              fieldType = "time";
+              break;
+            case 13:
+              fieldType = "file";
+              break;
+            case 18:
+              fieldType = "rating";
+              if (entryData[1]) {
+                options = entryData[1].map((opt: any) => opt[0]);
+              }
+              break;
+            default:
+              fieldType = "unknown";
+              console.warn(`Unknown type code: ${typeCode} for field: ${label}`);
+          }
+
+          return [{
+            id: entryId,
+            label,
+            type: fieldType,
+            options,
+            required: isRequired,
+          }];
         }
-
-        return {
-          id: `entry.${entryId}`,
-          label,
-          type: fieldType,
-          options,
-          required: isRequired,
-        };
       });
 
       onFieldsFetched(extractedFields);

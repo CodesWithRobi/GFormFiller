@@ -6,7 +6,7 @@ interface FormRendererProps {
   link: string;
 }
 
-const FormRenderer: React.FC<FormRendererProps> = ({ fields, link}) => {
+const FormRenderer: React.FC<FormRendererProps> = ({ fields, link }) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string | string[] }>({});
   const [prefilledLink, setPrefilledLink] = useState<string>("");
 
@@ -14,10 +14,12 @@ const FormRenderer: React.FC<FormRendererProps> = ({ fields, link}) => {
     setFormValues((prev) => ({
       ...prev,
       [fieldId]:
-        type === "checkbox" && Array.isArray(prev[fieldId])
-          ? (prev[fieldId] as string[]).includes(value as string)
-            ? (prev[fieldId] as string[]).filter((v) => v !== value)
-            : [...(prev[fieldId] as string[]), value as string]
+        type === "checkbox" || type === "checkbox-grid"
+          ? Array.isArray(prev[fieldId])
+            ? (prev[fieldId] as string[]).includes(value as string)
+              ? (prev[fieldId] as string[]).filter((v) => v !== value)
+              : [...(prev[fieldId] as string[]), value as string]
+            : [value as string]
           : value,
     }));
   };
@@ -119,6 +121,77 @@ const FormRenderer: React.FC<FormRendererProps> = ({ fields, link}) => {
             value={(formValues[field.id] as string) || ""}
             onChange={(e) => handleChange(field.id, e.target.value, field.type)}
           />
+        );
+      case "scale":
+        return (
+          <div>
+            {field.options?.map((option) => (
+              <label key={option}>
+                <input
+                  type="radio"
+                  name={field.id}
+                  value={option}
+                  checked={formValues[field.id] === option}
+                  onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        );
+      case "rating":
+        return (
+          <div>
+            {field.options?.map((option) => (
+              <label key={option}>
+                <input
+                  type="radio"
+                  name={field.id}
+                  value={option}
+                  checked={formValues[field.id] === option}
+                  onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        );
+      case "radio-grid":
+        return (
+          <div>
+            {field.options?.map((option) => (
+              <label key={option}>
+                <input
+                  type="radio"
+                  name={field.id}
+                  value={option}
+                  checked={formValues[field.id] === option}
+                  onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
+        );
+      case "checkbox-grid":
+        return (
+          <div>
+            {field.options?.map((option) => (
+              <label key={option}>
+                <input
+                  type="checkbox"
+                  name={field.id}
+                  value={option}
+                  checked={
+                    Array.isArray(formValues[field.id]) &&
+                    (formValues[field.id] as string[]).includes(option)
+                  }
+                  onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                />
+                {option}
+              </label>
+            ))}
+          </div>
         );
       default:
         return <p>Unsupported field type: {field.type}</p>;
