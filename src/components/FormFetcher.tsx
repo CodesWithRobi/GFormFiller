@@ -119,7 +119,7 @@ const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLin
               console.warn(`Unknown type code: ${typeCode} for field: ${label}`);
           }
 
-          return [{
+          return [{                  // Note this returns an array of object for flatMap
             id: entryId,
             label,
             type: fieldType,
