@@ -13,7 +13,7 @@ export type FormField = {
 interface FormFetcherProps {
   onFieldsFetched: (fields: FormField[]) => void;
   link: string;
-  setLink: React.Dispatch<React.SetStateAction<string>>;
+  setLink: (link: string) => void;
 }
 
 const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLink }) => {
