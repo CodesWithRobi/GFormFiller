@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { FormField } from "./FormFetcher";
+import GeneratedLink from "./GeneratedLink";
 
 interface FormRendererProps {
   fields: FormField[];
@@ -8,7 +9,6 @@ interface FormRendererProps {
 
 const FormRenderer: React.FC<FormRendererProps> = ({ fields, link }) => {
   const [formValues, setFormValues] = useState<{ [key: string]: string | string[] }>({});
-  const [prefilledLink, setPrefilledLink] = useState<string>("");
 
   const handleChange = (fieldId: string, value: string | string[], type: string) => {
     setFormValues((prev) => ({
@@ -22,20 +22,6 @@ const FormRenderer: React.FC<FormRendererProps> = ({ fields, link }) => {
             : [value as string]
           : value,
     }));
-  };
-
-  const generateLink = () => {
-    const baseUrl = `${link}?usp=pp_url`;
-    const queryParams = Object.entries(formValues)
-      .filter(([_, value]) => value !== "" && value.length > 0)
-      .map(([fieldId, value]) => {
-        if (Array.isArray(value)) {
-          return value.map((v) => `${fieldId}=${encodeURIComponent(v)}`).join("&");
-        }
-        return `${fieldId}=${encodeURIComponent(value)}`;
-      })
-      .join("&");
-    setPrefilledLink(queryParams ? `${baseUrl}&${queryParams}` : baseUrl);
   };
 
   const renderField = (field: FormField) => {
@@ -213,15 +199,7 @@ const FormRenderer: React.FC<FormRendererProps> = ({ fields, link }) => {
       ) : (
         <p>No fields found yet.</p>
       )}
-      <button onClick={generateLink}>Generate Prefilled Link</button>
-      {prefilledLink && (
-        <div>
-          <p>Prefilled Link:</p>
-          <a href={prefilledLink} target="_blank" rel="noopener noreferrer">
-            {prefilledLink}
-          </a>
-        </div>
-      )}
+      <GeneratedLink link={link} formValues={formValues} />
     </div>
   );
 };
