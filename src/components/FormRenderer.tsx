@@ -15,7 +15,7 @@ const FormRenderer: React.FC<FormRendererProps> = ({ fields, link }) => {
       ...prev,
       [fieldId]:
         type === "checkbox" || type === "checkbox-grid"
-          ? Array.isArray(prev[fieldId])
+      ? Array.isArray(prev[fieldId])
             ? (prev[fieldId] as string[]).includes(value as string)
               ? (prev[fieldId] as string[]).filter((v) => v !== value)
               : [...(prev[fieldId] as string[]), value as string]
