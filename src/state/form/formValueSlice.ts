@@ -14,10 +14,10 @@ const formValueSlice = createSlice({
   name: "formValues",
   initialState,
   reducers: {
-    setFormValues : (state, action: PayloadAction<{fieldId: string, value: string | string[], type: string}>) => {
+    setFormValues: (state, action: PayloadAction<{ fieldId: string, value: string | string[], type: string }>) => {
       const { fieldId, value, type } = action.payload;
       if (type === 'checkbox' || type === 'checkbox-grid') {
-        const current = Array.isArray(state.formValues[fieldId])
+        const current = Array.isArray(state.formValues[fieldId]) //For checkbox each fieldId have array of value
           ? (state.formValues[fieldId] as string[])
           : [];
         state.formValues[fieldId] = current.includes(value as string)
@@ -30,5 +30,5 @@ const formValueSlice = createSlice({
   }
 })
 
-export const {setFormValues} = formValueSlice.actions
+export const { setFormValues } = formValueSlice.actions
 export default formValueSlice.reducer

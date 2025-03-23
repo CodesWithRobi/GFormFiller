@@ -1,6 +1,9 @@
 import React, { FormEvent } from "react";
 import * as cheerio from "cheerio";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../state/store";
+import { setUrl, setFields } from "../state/form/formSlice";
 
 export type FormField = {
   id: string;
@@ -10,13 +13,11 @@ export type FormField = {
   required: boolean;
 };
 
-interface FormFetcherProps {
-  onFieldsFetched: (fields: FormField[]) => void;
-  link: string;
-  setLink: (link: string) => void;
-}
+const FormFetcher: React.FC = () => {
 
-const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLink }) => {
+  const url = useSelector((state: RootState) => state.form.url)
+  const dispatch = useDispatch<AppDispatch>()
+
   const fetchFormField = async (url: string) => {
     try {
       const response = await axios.get("http://localhost:3000/fetch-form", {
@@ -128,18 +129,18 @@ const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLin
           }];
         }
       });
+      dispatch(setFields(extractedFields));
 
-      onFieldsFetched(extractedFields);
     } catch (error) {
       console.error("Error fetching form:", error);
-      onFieldsFetched([]);
+      dispatch(setFields([]));
     }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (link) {
-      fetchFormField(link);
+    if (url) {
+      fetchFormField(url);
     } else {
       console.log("No link provided, using default");
       fetchFormField("https://docs.google.com/forms/d/e/1FAIpQLSeafbtS_ljnaqFPncoVR1eSbdBxIKcViEXmvo62GzOdAEnktA/viewform");
@@ -150,8 +151,8 @@ const FormFetcher: React.FC<FormFetcherProps> = ({ onFieldsFetched, link, setLin
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
+        value={url}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(setUrl(e.target.value))}
         placeholder="Enter Google Form URL"
       />
       <button type="submit">Fetch Fields</button>

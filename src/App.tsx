@@ -9,14 +9,9 @@ function App() {
   const [fields, setFields] = useState<FormField[]>([]);
   const [link, setLink] = useState<string>("");
 
-  const handleFieldsFetched = (fetchedFields: FormField[]) => {
-    setFields(fetchedFields);
-    console.log(fields);
-  };
-
   return (
     <div>
-      <FormFetcher onFieldsFetched={handleFieldsFetched} link={link} setLink={setLink} />
+      <FormFetcher />
       <FormRenderer fields={fields} link={link} />
     </div>
   );

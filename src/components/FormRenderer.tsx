@@ -1,27 +1,18 @@
-import React, { useState } from "react";
 import type { FormField } from "./FormFetcher";
 import GeneratedLink from "./GeneratedLink";
+import { AppDispatch, RootState } from "../state/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setFormValues } from "../state/form/formValueSlice";
 
-interface FormRendererProps {
-  fields: FormField[];
-  link: string;
-}
-
-const FormRenderer: React.FC<FormRendererProps> = ({ fields, link }) => {
-  const [formValues, setFormValues] = useState<{ [key: string]: string | string[] }>({});
+const FormRenderer: React.FC = () => {
+  const fields = useSelector((state: RootState) =>  state.form.fields )
+  const formValues = useSelector((state: RootState) => state.formValues.formValues)
+  const link = useSelector((state: RootState) =>  state.form.url ) //To be removed
+  const dispatch = useDispatch<AppDispatch>()
 
   const handleChange = (fieldId: string, value: string | string[], type: string) => {
-    setFormValues((prev) => ({
-      ...prev,
-      [fieldId]:
-        type === "checkbox" || type === "checkbox-grid"
-      ? Array.isArray(prev[fieldId])
-            ? (prev[fieldId] as string[]).includes(value as string)
-              ? (prev[fieldId] as string[]).filter((v) => v !== value)
-              : [...(prev[fieldId] as string[]), value as string]
-            : [value as string]
-          : value,
-    }));
+    dispatch(setFormValues({fieldId, value, type}))
+    
   };
 
   const renderField = (field: FormField) => {

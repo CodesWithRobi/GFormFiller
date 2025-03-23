@@ -1,24 +1,13 @@
-import { useState } from "react";
+import { AppDispatch, RootState } from "../state/store";
+import { useSelector, useDispatch } from "react-redux";
+import { generatePrefilledLink } from "../state/form/prefilledLinkSlice";
 
-interface GeneratedLinkProps {
-  link: string;
-  formValues: { [key: string]: string | string[] };
-}
+const GeneratedLink: React.FC = () => {
+  const prefilledLink = useSelector((state: RootState) => state.prefilledLink.prefilledLink)
+  const dispatch = useDispatch<AppDispatch>()
 
-const GeneratedLink: React.FC<GeneratedLinkProps> = ({ link, formValues }) => {
-  const [prefilledLink, setPrefilledLink] = useState<string>("");
   function generateLink() {
-    const baseUrl = `${link}?usp=pp_url`;
-    const queryParams = Object.entries(formValues)
-      .filter(([_, value]) => value !== "" && value.length > 0)
-      .map(([fieldId, value]) => {
-        if (Array.isArray(value)) {
-          return value.map((v) => `${fieldId}=${encodeURIComponent(v)}`).join("&");
-        }
-        return `${fieldId}=${encodeURIComponent(value)}`;
-      })
-      .join("&");
-    setPrefilledLink(queryParams ? `${baseUrl}&${queryParams}` : baseUrl);
+    dispatch(generatePrefilledLink())
   }
 
   return (
