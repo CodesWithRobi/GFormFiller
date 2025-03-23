@@ -1,5 +1,4 @@
 import type { FormField } from "./FormFetcher";
-import GeneratedLink from "./GeneratedLink";
 import { AppDispatch, RootState } from "../state/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setFormValues } from "../state/form/formValueSlice";
@@ -7,7 +6,6 @@ import { setFormValues } from "../state/form/formValueSlice";
 const FormRenderer: React.FC = () => {
   const fields = useSelector((state: RootState) =>  state.form.fields )
   const formValues = useSelector((state: RootState) => state.formValues.formValues)
-  const link = useSelector((state: RootState) =>  state.form.url ) //To be removed
   const dispatch = useDispatch<AppDispatch>()
 
   const handleChange = (fieldId: string, value: string | string[], type: string) => {
@@ -190,7 +188,6 @@ const FormRenderer: React.FC = () => {
       ) : (
         <p>No fields found yet.</p>
       )}
-      <GeneratedLink link={link} formValues={formValues} />
     </div>
   );
 };
