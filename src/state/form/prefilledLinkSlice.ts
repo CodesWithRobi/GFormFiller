@@ -33,8 +33,15 @@ export const generatePrefilledLink = (): AppThunk => (dispatch, getState) => {
     .filter(([_, value]) => value !== '' && value.length > 0)
     .map(([fieldId, value]) => {
       if (Array.isArray(value)) {
-        return value.map((v) => `${fieldId}=${encodeURIComponent(v)}`).join('&');
+        return value.map((v) => {
+          if(v === 'Other')
+            v = "__other_option__"
+          return `${fieldId}=${encodeURIComponent(v)}`
+        })
+        .join('&');
       }
+      else if(value === 'Other')
+        value = "__other_option__"
       return `${fieldId}=${encodeURIComponent(value)}`;
     })
     .join('&');

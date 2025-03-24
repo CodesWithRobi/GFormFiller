@@ -4,14 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { setFormValues } from "../state/form/formValueSlice";
 
 const FormRenderer: React.FC = () => {
-  const fields = useSelector((state: RootState) =>  state.form.fields )
+  const fields = useSelector((state: RootState) => state.form.fields)
   const formValues = useSelector((state: RootState) => state.formValues.formValues)
   const dispatch = useDispatch<AppDispatch>()
 
   const handleChange = (fieldId: string, value: string | string[], type: string) => {
-    dispatch(setFormValues({fieldId, value, type}))
-    
+    dispatch(setFormValues({ fieldId, value, type }))
   };
+  console.log(fields)
 
   const renderField = (field: FormField) => {
     switch (field.type) {
@@ -33,38 +33,99 @@ const FormRenderer: React.FC = () => {
       case "radio":
         return (
           <div>
-            {field.options?.map((option) => (
-              <label key={option}>
-                <input
-                  type="radio"
-                  name={field.id}
-                  value={option}
-                  checked={formValues[field.id] === option}
-                  onChange={(e) => handleChange(field.id, e.target.value, field.type)}
-                />
-                {option}
-              </label>
-            ))}
+            {field.options?.map((option) => {
+              if (option !== "Other") {
+                return (
+                  <label key={option}>
+                    <input
+                      type="radio"
+                      name={field.id}
+                      value={option}
+                      checked={formValues[field.id] === option}
+                      onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                    />
+                    {option}
+                  </label>
+                )
+              }
+              else {
+                return (
+                  <label key={option}>
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={formValues[field.id] === option}
+                      onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                    />
+                    {`${option} :`}
+                    <input
+                      type="text"
+                      name={`${field.id}.other_option_response`}
+                      value={formValues[`${field.id}.other_option_response`]}
+                      onChange={(e) => handleChange(`${field.id}.other_option_response`, e.target.value, "other_option")}
+                    />
+                    <input
+                      type="hidden"
+                      value="__other_option__"
+                      name={field.id}
+                    />
+                  </label>
+                )
+              }
+            })
+            }
           </div>
-        );
+        )
       case "checkbox":
         return (
           <div>
-            {field.options?.map((option) => (
-              <label key={option}>
-                <input
-                  type="checkbox"
-                  name={field.id}
-                  value={option}
-                  checked={
-                    Array.isArray(formValues[field.id]) &&
-                    (formValues[field.id] as string[]).includes(option)
-                  }
-                  onChange={(e) => handleChange(field.id, e.target.value, field.type)}
-                />
-                {option}
-              </label>
-            ))}
+            {field.options?.map((option) => {
+              if (option !== "Other") {
+                return (
+                  <label key={option}>
+                    <input
+                      type="checkbox"
+                      name={field.id}
+                      value={option}
+                      checked={
+                        Array.isArray(formValues[field.id]) &&
+                        (formValues[field.id] as string[]).includes(option)
+                      }
+                      onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                    />
+                    {option}
+                  </label>
+                )
+              }
+              else {
+                return (
+                  <label key={option}>
+                    <input
+                      type="checkbox"
+                      name={field.id}
+                      value={option}
+                      checked={
+                        Array.isArray(formValues[field.id]) &&
+                        (formValues[field.id] as string[]).includes(option)
+                      }
+                      onChange={(e) => handleChange(field.id, e.target.value, field.type)}
+                    />
+                    {`${option} :`}
+                    <input
+                      type="text"
+                      name={`${field.id}.other_option_response`}
+                      value={formValues[`${field.id}.other_option_response`]}
+                      onChange={(e) => handleChange(`${field.id}.other_option_response`, e.target.value, "text")}
+                    />
+                    <input
+                      type="hidden"
+                      value="__other_option__"
+                      name={field.id}
+                    />
+                  </label>
+                )
+              }
+            })}
           </div>
         );
       case "select":
